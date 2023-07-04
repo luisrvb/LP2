@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=Estudante
+comment0.text=\r\n\ Escreva\ uma\ descri\u00E7\u00E3o\ da\ classe\ Estudante\ aqui.\r\n\ \r\n\ @author\ (seu\ nome)\ \r\n\ @version\ (um\ n\u00FAmero\ da\ vers\u00E3o\ ou\ uma\ data)\r\n
+comment1.params=nome\ telefone\ email\ matricula\ diasDisponiveis\ horariosDisponiveis
+comment1.target=Estudante(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.util.List,\ java.util.List)
+comment2.params=
+comment2.target=java.lang.String\ getMatricula()
+comment3.params=
+comment3.target=java.util.List\ getDiasDisponiveis()
+comment4.params=
+comment4.target=java.util.List\ getHorariosDisponiveis()
+numComments=5
