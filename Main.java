@@ -123,25 +123,25 @@ public class Main extends JFrame {
     while (true) {
         String nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do professor:");
         if (nome == null) {
-            return; // User canceled the input
+            return; // Cancelamento do input
         }
 
         String telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do professor:");
         if (telefone == null) {
-            return; // User canceled the input
+            return; // Cancelamento do input
         }
 
         String email = JOptionPane.showInputDialog(desktopPane, "Digite o email do professor:");
         if (email == null) {
-            return; // User canceled the input
+            return; // Cancelamento do input
         }
 
         Professor professor = new Professor(nome, telefone, email);
-        // Code for registering professor
+        // Registrar professor
         try {
             professor.validarDados();
-            // Save the professor in the list of professors, if necessary
-            break; // Exit the loop as the input is valid
+            // Salva professor na lista
+            break; // Sai do loop em entrada invalida
         } catch (Exception e) {
             JOptionPane.showMessageDialog(desktopPane, "Erro: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -152,33 +152,33 @@ public class Main extends JFrame {
     while (true) {
         String nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do estudante:");
         if (nome == null) {
-            return; // User canceled the input
+            return; // Cancelamento do input
         }
 
         String telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do estudante:");
         if (telefone == null) {
-            return; // User canceled the input
+            return; // Cancelamento do input
         }
 
         String email = JOptionPane.showInputDialog(desktopPane, "Digite o email do estudante:");
         if (email == null) {
-            return; // User canceled the input
+            return; // Cancelamento do input
         }
 
         String matricula = JOptionPane.showInputDialog(desktopPane, "Digite a matrícula do estudante:");
         if (matricula == null) {
-            return; // User canceled the input
+            return; // Cancelamento do input
         }
 
-        // Code to obtain the lists of available days and times
+        // Obter lista de dias e horários disponiveis
         List<String> diasDisponiveis = new ArrayList<>();
         List<String> horariosDisponiveis = new ArrayList<>();
 
         Estudante estudante = new Estudante(nome, telefone, email, matricula, diasDisponiveis, horariosDisponiveis);
         try {
             estudante.validarDados();
-            // Save the student in the list of students, if necessary
-            break; // Exit the loop as the input is valid
+            // Salva estudante na lista
+            break; // Sai do loop
         } catch (Exception e) {
             JOptionPane.showMessageDialog(desktopPane, "Erro: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -189,28 +189,28 @@ public class Main extends JFrame {
     while (true) {
         String nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do usuário:");
         if (nome == null) {
-            return; // User canceled the input
+            return; // Cancela input
         }
 
         String telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do usuário:");
         if (telefone == null) {
-            return; // User canceled the input
+            return; // Cancela input
         }
 
         String email = JOptionPane.showInputDialog(desktopPane, "Digite o email do usuário:");
         if (email == null) {
-            return; // User canceled the input
+            return; // Cancela input
         }
 
         String cpf = JOptionPane.showInputDialog(desktopPane, "Digite o CPF do usuário (formato XXX.XXX.XXX-XX):");
         if (cpf == null) {
-            return; // User canceled the input
+            return; //Cancela input
         }
         
         Date dataNascimento = null;
         String dataNascimentoStr = JOptionPane.showInputDialog(desktopPane, "Digite a data de nascimento do usuário (formato dd/MM/yyyy):");
         if (dataNascimentoStr == null) {
-            return; // User canceled the input
+            return; // Cancela input
         }
 
         try {
@@ -219,10 +219,10 @@ public class Main extends JFrame {
             novoUsuario.validarDados();
 
             if (!usuarios.contains(novoUsuario)) {
-                usuarios.add(novoUsuario); // Add the new user to the list
-                // Update the ComboBox of available users for atendimento
+                usuarios.add(novoUsuario); //Novo usuario a lista
+                // atualiza usuarios disponiveis
                 usuariosComboBox.addItem(novoUsuario.getNome());
-                break; // Exit the loop as the input is valid
+                break; // 
             } else {
                 JOptionPane.showMessageDialog(desktopPane, "Usuário já cadastrado.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
