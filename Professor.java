@@ -8,19 +8,26 @@ import java.util.ArrayList;
  * @version (um número da versão ou uma data)
  */
 
-class Professor extends PessoaFisica {
-    private List<String> diasAtendimento;
+class Professor extends Pessoa {
+    private List<Estudante> estudantes;
 
     public Professor(String nome, String telefone, String email) {
         super(nome, telefone, email);
-        diasAtendimento = new ArrayList<>();
+        estudantes = new ArrayList<>();
     }
 
-    public void adicionarDiaAtendimento(String dia) {
-        diasAtendimento.add(dia);
+    public void adicionarEstudante(Estudante estudante) {
+        estudantes.add(estudante);
     }
 
-    public List<String> getDiasAtendimento() {
-        return diasAtendimento;
+    public List<Estudante> getEstudantes() {
+        return estudantes;
+    }
+
+    @Override
+    public void validarDados() throws Exception {
+        // Implement data validation specific to Professor, if necessary
     }
 }
+
+

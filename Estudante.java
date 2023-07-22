@@ -7,7 +7,7 @@ import java.util.List;
  * @version (um número da versão ou uma data)
  */
 
-class Estudante extends PessoaFisica {
+class Estudante extends Pessoa {
     private String matricula;
     private List<String> diasDisponiveis;
     private List<String> horariosDisponiveis;
@@ -29,5 +29,10 @@ class Estudante extends PessoaFisica {
 
     public List<String> getHorariosDisponiveis() {
         return horariosDisponiveis;
+    }
+
+    @Override
+    public void validarDados() throws Exception {
+        // Implement data validation specific to Estudante, if necessary
     }
 }

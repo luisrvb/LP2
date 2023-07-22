@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Escreva uma descrição da classe Atendimento aqui.
@@ -41,3 +42,4 @@ class Atendimento implements AtendimentoContabil {
         System.out.println("Realizando atendimento...");
     }
 }
+
