@@ -33,6 +33,7 @@ class Estudante extends Pessoa {
 
     @Override
     public void validarDados() throws Exception {
-        // Implement data validation specific to Estudante, if necessary
+        validarDadosComuns();
     }
+    
 }

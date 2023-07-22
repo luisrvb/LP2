@@ -13,6 +13,7 @@ import java.text.ParseException;
  * @version (um número da versão ou uma data)
  */
 
+
 public class Main extends JFrame {
     private List<Usuario> usuarios;
     private List<Atendimento> atendimentos;
@@ -119,184 +120,202 @@ public class Main extends JFrame {
         getContentPane().add(comboBoxPanel, BorderLayout.NORTH);
     }
 
-    private void cadastrarProfessor() {
-    while (true) {
-        String nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do professor:");
-        if (nome == null) {
-            return; // Cancelamento do input
-        }
-
-        String telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do professor:");
-        if (telefone == null) {
-            return; // Cancelamento do input
-        }
-
-        String email = JOptionPane.showInputDialog(desktopPane, "Digite o email do professor:");
-        if (email == null) {
-            return; // Cancelamento do input
-        }
-
-        Professor professor = new Professor(nome, telefone, email);
-        // Registrar professor
-        try {
-            professor.validarDados();
-            // Salva professor na lista
-            break; // Sai do loop em entrada invalida
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(desktopPane, "Erro: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-}
-
-    private void cadastrarEstudante() {
-    while (true) {
-        String nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do estudante:");
-        if (nome == null) {
-            return; // Cancelamento do input
-        }
-
-        String telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do estudante:");
-        if (telefone == null) {
-            return; // Cancelamento do input
-        }
-
-        String email = JOptionPane.showInputDialog(desktopPane, "Digite o email do estudante:");
-        if (email == null) {
-            return; // Cancelamento do input
-        }
-
-        String matricula = JOptionPane.showInputDialog(desktopPane, "Digite a matrícula do estudante:");
-        if (matricula == null) {
-            return; // Cancelamento do input
-        }
-
-        // Obter lista de dias e horários disponiveis
-        List<String> diasDisponiveis = new ArrayList<>();
-        List<String> horariosDisponiveis = new ArrayList<>();
-
-        Estudante estudante = new Estudante(nome, telefone, email, matricula, diasDisponiveis, horariosDisponiveis);
-        try {
-            estudante.validarDados();
-            // Salva estudante na lista
-            break; // Sai do loop
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(desktopPane, "Erro: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-}
-
+ 
     private void cadastrarUsuario() {
-    while (true) {
-        String nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do usuário:");
-        if (nome == null) {
-            return; // Cancela input
-        }
-
-        String telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do usuário:");
-        if (telefone == null) {
-            return; // Cancela input
-        }
-
-        String email = JOptionPane.showInputDialog(desktopPane, "Digite o email do usuário:");
-        if (email == null) {
-            return; // Cancela input
-        }
-
-        String cpf = JOptionPane.showInputDialog(desktopPane, "Digite o CPF do usuário (formato XXX.XXX.XXX-XX):");
-        if (cpf == null) {
-            return; //Cancela input
-        }
-        
-        Date dataNascimento = null;
-        String dataNascimentoStr = JOptionPane.showInputDialog(desktopPane, "Digite a data de nascimento do usuário (formato dd/MM/yyyy):");
-        if (dataNascimentoStr == null) {
-            return; // Cancela input
-        }
-
-        try {
-
-            Usuario novoUsuario = new Usuario(nome, telefone, email, cpf, dataNascimento);
-            novoUsuario.validarDados();
-
-            if (!usuarios.contains(novoUsuario)) {
-                usuarios.add(novoUsuario); //Novo usuario a lista
-                // atualiza usuarios disponiveis
-                usuariosComboBox.addItem(novoUsuario.getNome());
-                break; // 
-            } else {
-                JOptionPane.showMessageDialog(desktopPane, "Usuário já cadastrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        String nome;
+        String telefone;
+        String email;
+        String cpf;
+        Date dataNascimento;
+    
+        do {
+            nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do usuário:");
+            if (nome == null) {
+                return; // Cancela input
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(desktopPane, "Erro: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+    
+            telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do usuário:");
+            if (telefone == null) {
+                return; // Cancela input
+            }
+    
+            email = JOptionPane.showInputDialog(desktopPane, "Digite o email do usuário:");
+            if (email == null) {
+                return; // Cancela input
+            }
+    
+            cpf = JOptionPane.showInputDialog(desktopPane, "Digite o CPF do usuário (formato XXX.XXX.XXX-XX):");
+            if (cpf == null) {
+                return; // Cancela input
+            }
+    
+            String dataNascimentoStr = JOptionPane.showInputDialog(desktopPane, "Digite a data de nascimento do usuário (formato dd/MM/yyyy):");
+            if (dataNascimentoStr == null) {
+                return; // Cancela input
+            }
+    
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                dataNascimento = dateFormat.parse(dataNascimentoStr);
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(desktopPane, "Data de nascimento inválida. Insira a data no formato dd/MM/yyyy. Por favor, repita a última entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                continue; // Restart the loop to re-enter the data
+            }
+    
+            Usuario novoUsuario = new Usuario(nome, telefone, email, cpf, dataNascimento);
+            try {
+                novoUsuario.validarDados();
+    
+                if (!usuarios.contains(novoUsuario)) {
+                    usuarios.add(novoUsuario); //Novo usuário a lista
+                    // Atualiza usuários disponíveis
+                    usuariosComboBox.addItem(novoUsuario.getNome());
+                    break; // End the loop when all data is valid
+                } else {
+                    JOptionPane.showMessageDialog(desktopPane, "Usuário já cadastrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(desktopPane, "Erro: " + e.getMessage() + " Por favor, repita a última entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } while (true);
     }
-}
+    
+    private void cadastrarProfessor() {
+        String nome;
+        String telefone;
+        String email;
+    
+        do {
+            nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do professor:");
+            if (nome == null) {
+                return; // Cancelamento do input
+            }
+    
+            telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do professor:");
+            if (telefone == null) {
+                return; // Cancelamento do input
+            }
+    
+            email = JOptionPane.showInputDialog(desktopPane, "Digite o email do professor:");
+            if (email == null) {
+                return; // Cancelamento do input
+            }
+    
+            Professor professor = new Professor(nome, telefone, email);
+            try {
+                professor.validarDados();
+                // Registrar professor
+                // Salva professor na lista
+                break; // Sai do loop em entrada válida
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(desktopPane, "Erro: " + e.getMessage() + " Por favor, repita a última entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } while (true);
+    }
+    
+    private void cadastrarEstudante() {
+        String nome;
+        String telefone;
+        String email;
+        String matricula;
+    
+        do {
+            nome = JOptionPane.showInputDialog(desktopPane, "Digite o nome do estudante:");
+            if (nome == null) {
+                return; // Cancelamento do input
+            }
+    
+            telefone = JOptionPane.showInputDialog(desktopPane, "Digite o telefone do estudante:");
+            if (telefone == null) {
+                return; // Cancelamento do input
+            }
+    
+            email = JOptionPane.showInputDialog(desktopPane, "Digite o email do estudante:");
+            if (email == null) {
+                return; // Cancelamento do input
+            }
+    
+            matricula = JOptionPane.showInputDialog(desktopPane, "Digite a matrícula do estudante:");
+            if (matricula == null) {
+                return; // Cancelamento do input
+            }
+    
+            Estudante estudante = new Estudante(nome, telefone, email, matricula, new ArrayList<>(), new ArrayList<>());
+            try {
+                estudante.validarDados();
+                // Salva estudante na lista
+                break; // Sai do loop em entrada válida
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(desktopPane, "Erro: " + e.getMessage() + " Por favor, repita a última entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } while (true);
+    }
 
 
     private void cadastrarAtendimento() {
-    if (usuarios.isEmpty()) {
-        JOptionPane.showMessageDialog(desktopPane, "Não há usuários cadastrados para realizar atendimentos.", "Erro", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (usuarios.isEmpty()) {
+            JOptionPane.showMessageDialog(desktopPane, "Não há usuários cadastrados para realizar atendimentos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    // Cria um menu com nomes de usuarios
-    String[] usuariosNomes = usuarios.stream().map(Usuario::getNome).toArray(String[]::new);
-    String nomeUsuarioSelecionado = (String) JOptionPane.showInputDialog(
-            desktopPane,
-            "Selecione o Usuário:",
-            "Cadastrar Atendimento",
-            JOptionPane.PLAIN_MESSAGE,
-            null,
-            usuariosNomes,
-            usuariosNomes[0]);
+        // Cria um menu com nomes de usuarios
+        String[] usuariosNomes = usuarios.stream().map(Usuario::getNome).toArray(String[]::new);
+        String nomeUsuarioSelecionado = (String) JOptionPane.showInputDialog(
+                desktopPane,
+                "Selecione o Usuário:",
+                "Cadastrar Atendimento",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                usuariosNomes,
+                usuariosNomes[0]);
 
-    // Se nenhum usuario for selecionado, retorna
-    if (nomeUsuarioSelecionado == null) {
-        return;
-    }
+        // Se nenhum usuario for selecionado, retorna
+        if (nomeUsuarioSelecionado == null) {
+            return;
+        }
 
-    // Procura o usuario selecionado em uma lista
-    Usuario usuarioAtendimento = usuarios.stream()
-            .filter(u -> u.getNome().equals(nomeUsuarioSelecionado))
-            .findFirst()
-            .orElse(null);
+        // Procura o usuario selecionado em uma lista
+        Usuario usuarioAtendimento = usuarios.stream()
+                .filter(u -> u.getNome().equals(nomeUsuarioSelecionado))
+                .findFirst()
+                .orElse(null);
 
-    if (usuarioAtendimento == null) {
-        JOptionPane.showMessageDialog(desktopPane, "Usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (usuarioAtendimento == null) {
+            JOptionPane.showMessageDialog(desktopPane, "Usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    String guicheStr = JOptionPane.showInputDialog(desktopPane, "Digite o número do Guichê:");
-    int guicheAtendimento = 0;
-    try {
-        guicheAtendimento = Integer.parseInt(guicheStr);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(desktopPane, "Número de guichê inválido. Insira um número inteiro.", "Erro", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        String guicheStr = JOptionPane.showInputDialog(desktopPane, "Digite o número do Guichê:");
+        int guicheAtendimento = 0;
+        try {
+            guicheAtendimento = Integer.parseInt(guicheStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(desktopPane, "Número de guichê inválido. Insira um número inteiro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    // Cria lista para tipo de atendimento
-    
-    String[] tiposAtendimento = { "IRPF", "Retificações", "Dúvidas" };
-    String tipoAtendimentoSelecionado = (String) JOptionPane.showInputDialog(
-            desktopPane,
-            "Selecione o Tipo de Atendimento:",
-            "Cadastrar Atendimento",
-            JOptionPane.PLAIN_MESSAGE,
-            null,
-            tiposAtendimento,
-            tiposAtendimento[0]);
+        // Cria lista para tipo de atendimento
 
-    // Se nenhum atendimento for selecionado, volta
-    if (tipoAtendimentoSelecionado == null) {
-        return;
-    }
-    
-    Date dataHoraAtendimento = new Date(); // Usa a data atual
+        String[] tiposAtendimento = { "IRPF", "Retificações", "Dúvidas" };
+        String tipoAtendimentoSelecionado = (String) JOptionPane.showInputDialog(
+                desktopPane,
+                "Selecione o Tipo de Atendimento:",
+                "Cadastrar Atendimento",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                tiposAtendimento,
+                tiposAtendimento[0]);
 
-    Atendimento novoAtendimento = new Atendimento(usuarioAtendimento, guicheAtendimento, tipoAtendimentoSelecionado, dataHoraAtendimento);
-    atendimentos.add(novoAtendimento);
-}
+        // Se nenhum atendimento for selecionado, volta
+        if (tipoAtendimentoSelecionado == null) {
+            return;
+        }
+
+        Date dataHoraAtendimento = new Date(); // Usa a data atual
+
+        Atendimento novoAtendimento = new Atendimento(usuarioAtendimento, guicheAtendimento, tipoAtendimentoSelecionado, dataHoraAtendimento);
+        atendimentos.add(novoAtendimento);
+        }
 
     private void exibirRelatorioAtendimentos() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -319,7 +338,6 @@ public class Main extends JFrame {
             }
         });
     }
-
 }
 
 

@@ -32,8 +32,6 @@ abstract class Pessoa {
         return email;
     }
 
-    public abstract void validarDados() throws Exception;
-
     // UN3 - Mapa para associar os tipos de Pessoa com suas implementações
     private static final Map<Class<? extends Pessoa>, String> tipoPessoaMap = new HashMap<>();
 
@@ -45,5 +43,22 @@ abstract class Pessoa {
     // UN3 - Método para obter a descrição do tipo de Pessoa
     public static String getDescricaoTipoPessoa(Class<? extends Pessoa> tipoPessoa) {
         return tipoPessoaMap.get(tipoPessoa);
+    }
+
+    public abstract void validarDados() throws Exception;
+
+    // Common data validation logic for all subclasses
+    protected void validarDadosComuns() throws Exception {
+        if (getNome().isEmpty()) {
+            throw new Exception("O nome não pode estar vazio.");
+        }
+
+        if (!getTelefone().matches("\\d{11}")) {
+            throw new Exception("Número de telefone inválido. Insira apenas os números do telefone (11 dígitos).");
+        }
+
+        if (!getEmail().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            throw new Exception("Email inválido. Insira um email válido no formato 'usuario@dominio.com'.");
+        }
     }
 }
